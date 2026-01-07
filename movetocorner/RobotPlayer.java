@@ -1,6 +1,7 @@
-package examplefuncsplayer;
+package movetocorner;
 
 import battlecode.common.*;
+import battlecode.schema.RobotType;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ public class RobotPlayer {
      */
     static int turnCount = 0;
 
+
     /**
      * A random number generator.
      * We will use this RNG to make some random moves. The Random class is provided by the java.util.Random
@@ -37,7 +39,7 @@ public class RobotPlayer {
     static final Random rng = new Random(6147);
 
     /** Array containing all the possible movement directions. */
-    static final Direction[] directions = {
+    public static final Direction[] directions = {
             Direction.NORTH,
             Direction.NORTHEAST,
             Direction.EAST,
@@ -56,6 +58,21 @@ public class RobotPlayer {
      *            information on its current status. Essentially your portal to interacting with the world.
      **/
     @SuppressWarnings("unused")
+
+    public static Direction opposite(Direction dir) {
+        int index = -1;
+
+        for (int i = 0; i < directions.length; i++) {
+            if (directions[i] == dir) {
+                index = i;
+                break;
+            }
+        }
+
+        // move 4 steps forward and wrap around
+        return directions[(index + 4) % directions.length];
+    }
+
     public static void run(RobotController rc) throws GameActionException {
         // Hello world! Standard output is very useful for debugging.
         // Everything you say here will be directly viewable in your terminal when you run a match!
@@ -78,24 +95,50 @@ public class RobotPlayer {
                 // use different strategies on different robots. If you wish, you are free to rewrite
                 // this into a different control structure!
 
-                // Every 10 turns, print out what type of robot we are.
-                if (turnCount % 100 == 0) {
-                    System.out.println("Turn " + turnCount + ": I am a " + rc.getType().toString());
+                MapLocation closest = new MapLocation(0,0);
+                int dist = rc.getLocation().distanceSquaredTo(closest);
+
+                int d = rc.getLocation().distanceSquaredTo(new MapLocation(rc.getMapWidth(), rc.getMapHeight()));
+                if(d < dist) {
+                    dist = d;
+                    closest = new MapLocation(rc.getMapWidth(), rc.getMapHeight());
+                }
+                d = rc.getLocation().distanceSquaredTo(new MapLocation(rc.getMapWidth(), 0));
+                if (d < dist) {
+                    dist = d;
+                    closest = new MapLocation(rc.getMapHeight(), 0);
+                }
+                d = rc.getLocation().distanceSquaredTo(new MapLocation(0, rc.getMapHeight()));
+                if (d < dist) {
+                    dist = d;
+                    closest = new MapLocation(0, rc.getMapHeight());
                 }
 
-                // Try to move forward one step.
-                if (rc.canMoveForward()) {
-                    System.out.println("Turn " + turnCount + ": Trying to move " + rc.getDirection());
-                    rc.moveForward();
-                } else {
-                    System.out.println("couldn't move forward on turn " + turnCount + " at location " + rc.getLocation() + " facing " + rc.getDirection());
-                    // If we can't move forward, try to turn a random direction.
-                    int randomDirection = rng.nextInt(8);
+                Direction dir = rc.getLocation().directionTo(closest);
+                if(rc.canTurn()) {
+                    rc.turn(dir);
+                }
 
-                    if (rc.canTurn()) {
-                        rc.turn(directions[randomDirection]);
+                if(rc.canMove(dir)) {
+                    rc.move(dir);
+                }
+
+                RobotInfo[] robots = rc.senseNearbyRobots();
+
+                for(RobotInfo robot : robots) {
+                    if(robot.getType().isCatType()) {
+                        Direction direction = robot.getLocation().directionTo(rc.getLocation());
+
+                        if(rc.canPlaceCatTrap(robot.getLocation().add(direction))) {
+                            rc.placeCatTrap(robot.getLocation().add(direction));
+                        }
+                        if(rc.canPlaceCatTrap(robot.getLocation().add(direction).add(direction))) {
+                            rc.placeCatTrap(robot.getLocation().add(direction).add(direction));
+                        }
                     }
                 }
+
+
             } catch (GameActionException e) {
                 // Oh no! It looks like we did something illegal in the Battlecode world. You should
                 // handle GameActionExceptions judiciously, in case unexpected events occur in the game
