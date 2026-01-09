@@ -1,4 +1,4 @@
-package botv1;
+package v1;
 
 public class RatKing {
 

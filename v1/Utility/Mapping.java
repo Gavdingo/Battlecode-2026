@@ -1,4 +1,4 @@
-package botv1.Utility;
+package v1.Utility;
 
 public class Mapping {
 }
