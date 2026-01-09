@@ -9,7 +9,7 @@ public class RatKing extends  RobotPlayer{
     public static void init(RobotController rc) {}
 
     public static void run(RobotController rc) throws GameActionException {
-
+        //TODO: improve this code and organize them into methods
 
         //run from cats
 
