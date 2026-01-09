@@ -1,8 +1,36 @@
 package v1;
 
-import battlecode.common.RobotController;
+import battlecode.common.*;
+import v1.Utility.Mapping;
 
-public class RatKing {
+import java.util.Map;
+
+public class RatKing extends  RobotPlayer{
     public static void init(RobotController rc) {}
 
+    public static void run(RobotController rc) throws GameActionException {
+
+
+        //run from cats
+
+        if(Mapping.cats != null && Mapping.cats.length >= 1) {
+            Direction catDirection = rc.getLocation().directionTo(Mapping.cats[0].getLocation());
+            if(rc.canMove(getOppositeDirection(catDirection))) {
+                rc.move(getOppositeDirection(catDirection));
+            }
+
+        }
+
+        //spawn rats
+
+        Direction enemyKing = rc.getLocation().directionTo(getOppositeSymmetry(rc, rc.getLocation()));
+
+        if(rc.getAllCheese() > 500) {
+            if(rc.canBuildRat(rc.getLocation().add(enemyKing).add(enemyKing))) {
+                rc.buildRat(rc.getLocation().add(enemyKing).add(enemyKing));
+            }
+        }
+
+
+    }
 }
