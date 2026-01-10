@@ -6,6 +6,7 @@ import v1.BabyRat.Collect;
 import v1.BabyRat.Controller;
 import v1.BabyRat.Explore;
 import v1.Utility.Mapping;
+import v1.Utility.Sensing;
 
 import java.util.Random;
 
@@ -41,7 +42,7 @@ public class RobotPlayer {
             try {
 
                 //run Utility functions first
-                Mapping.run(rc);
+                Sensing.run(rc);
 
                 if (rc.getType().isBabyRatType()) {
                     Controller.run(rc);
@@ -68,6 +69,7 @@ public class RobotPlayer {
         Explore.init(rc);
         //Utility
         Mapping.init(rc);
+        Sensing.init(rc);
         //RatKing
         RatKing.init(rc);
     }
