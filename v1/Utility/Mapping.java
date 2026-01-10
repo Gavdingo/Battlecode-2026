@@ -26,14 +26,14 @@ public class Mapping {
     public static RobotInfo[] cats;
 
 
-    public static void init(RobotController rc) {
+    public static void init(RobotController rc) {}
 
+    public static void run(RobotController rc) {
         mapInfos = rc.senseNearbyMapInfos();
         robotInfos = rc.senseNearbyRobots();
 
         updateNearbyRats(rc);
         updateNearbyCats(rc);
-
     }
 
     public static void updateNearbyCats(RobotController rc) {
@@ -71,6 +71,7 @@ public class Mapping {
                 }
             } else if (robot.getType().isRatKingType() && robot.getTeam() != rc.getTeam()) {
                 enemyKings += 1;
+                //rc.setIndicatorString(Integer.toString(enemyKings));
             }
             //rc.setIndicatorString(robot.toString() + "." + robot.getType().toString());
         }
@@ -102,6 +103,7 @@ public class Mapping {
             } else if (robotInfo.getType().isRatKingType() && robotInfo.getTeam() != rc.getTeam()) {
                 enemyRatKings[eKings] = robotInfo.getLocation();
                 eKings += 1;
+                //rc.setIndicatorString(enemyRatKings[0].toString());
             }
         }
     }

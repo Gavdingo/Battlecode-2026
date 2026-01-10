@@ -11,7 +11,9 @@ import java.util.Random;
 
 public class RobotPlayer {
 
-    static public final Direction[] directions = {
+    public static int turnCount = 0;
+
+    public static final Direction[] directions = {
             Direction.NORTH,
             Direction.NORTHEAST,
             Direction.EAST,
@@ -29,11 +31,17 @@ public class RobotPlayer {
 
         spawnLocation = rc.getLocation();
 
+        //Run Initialization Methods
+        initialize(rc);
+
         while (true) {
+
+            turnCount++;
+
             try {
 
-                //Run Initialization Methods
-                initialize(rc);
+                //run Utility functions first
+                Mapping.run(rc);
 
                 if (rc.getType().isBabyRatType()) {
                     Controller.run(rc);
@@ -42,6 +50,7 @@ public class RobotPlayer {
                 if (rc.getType().isRatKingType()) {
                     RatKing.run(rc);
                 }
+
 
 
             } finally {

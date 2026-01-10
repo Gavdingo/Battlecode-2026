@@ -9,7 +9,7 @@ public class Pathfinding {
         //TODO: add actual pathfinding logic
 
         Direction dir = rc.getLocation().directionTo(target);
-        if(rc.canTurn()) {
+        if(rc.canTurn() && dir != Direction.CENTER) {
             rc.turn(dir);
         }
 
