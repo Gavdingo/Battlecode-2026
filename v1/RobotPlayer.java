@@ -5,6 +5,8 @@ import v1.BabyRat.Attack;
 import v1.BabyRat.Collect;
 import v1.BabyRat.Controller;
 import v1.BabyRat.Explore;
+import v1.Utility.CommInfo;
+import v1.Utility.Communication;
 import v1.Utility.Mapping;
 import v1.Utility.Sensing;
 
@@ -40,7 +42,7 @@ public class RobotPlayer {
             turnCount++;
 
             try {
-
+                
                 //run Utility functions first
                 Sensing.run(rc);
 

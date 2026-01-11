@@ -32,6 +32,7 @@ public class Communication {
     }
 
     //SAMPLE FUNCTION TO MAKE SQUEAK:
+    // Send the "kidnapped" message
     // new Communication.Squeak(rc).kidnapped(new MapLocation(3,5)).EncodeandSqueak(rc);
     public static class Squeak {
         public boolean forRatKing = false;
@@ -147,26 +148,37 @@ public class Communication {
 
     }
 
+    //Example:
+    //CommInfo[] val = new Communication.Listen(rc).getDecoded()
+    // TO get an individual squeak, use:
+    // for (CommInfo comminfo : val) {
+    //      ...
+    // }
+    public static class Listen {
 
-    public class Listen {
-
-        CommInfo[] messages = {};
+        CommInfo[] messages;
 
         CommInfo[] Decode(Message[] input) {
-            for (message : input) {
-
+            messages = new CommInfo[input.length];
+            int idx = 0;
+            for (Message message : input) {
+                messages[idx] = new CommInfo(message);
+                idx++;
             }
-            return new CommInfo(message);
+            return messages;
         }
 
         public Listen(RobotController rc) {
-            rc.readSqueaks(-1);
+            Decode(rc.readSqueaks(-1));
         }
 
         public Listen(RobotController rc, int numRounds) {
-            rc.readSqueaks(numRounds);
+            Decode(rc.readSqueaks(numRounds));
         }
 
+        public CommInfo[] getDecoded() {
+            return messages;
+        }
 
     }
 
