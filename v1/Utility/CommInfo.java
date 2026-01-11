@@ -3,11 +3,14 @@ package v1.Utility;
 import battlecode.common.MapLocation;
 import battlecode.common.Message;
 
+import java.util.Map;
+
 //Decoded message information can be stored in this class
 public class CommInfo {
     //Messages
     public Message message;
     //FLAGS
+    //ADD YOUR NEW FLAGS HERE
     public boolean flag_cat = false;
     public boolean flag_enemyRatKing = false;
     public boolean flag_enemyRat1 = false;
@@ -18,8 +21,8 @@ public class CommInfo {
 
     boolean RatKing;
     int Ident;
-    MapLocation Coord1;
-    MapLocation Coord2;
+    public MapLocation Coord1;
+    public MapLocation Coord2;
 
 
     public CommInfo(Message input) {
@@ -59,5 +62,17 @@ public class CommInfo {
                 flag_enemyRat2 = true;
                 break;
         }
+    }
+
+    public int getIdent() {
+        return this.Ident;
+    }
+
+    public MapLocation getCoord1() {
+        return this.Coord1;
+    }
+
+    public MapLocation getCoord2() {
+        return this.Coord2;
     }
 }

@@ -42,7 +42,7 @@ public class RobotPlayer {
             turnCount++;
 
             try {
-                
+
                 //run Utility functions first
                 Sensing.run(rc);
 
