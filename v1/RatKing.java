@@ -2,6 +2,7 @@ package v1;
 
 import battlecode.common.*;
 import v1.Utility.Mapping;
+import v1.Utility.Sensing;
 
 import java.util.Map;
 
@@ -13,10 +14,10 @@ public class RatKing extends  RobotPlayer{
 
         //run from cats
 
-        if(Mapping.cats != null && Mapping.cats.length >= 1) {
-            Direction catDirection = rc.getLocation().directionTo(Mapping.cats[0].getLocation());
-            if(rc.canMove(getOppositeDirection(catDirection))) {
-                rc.move(getOppositeDirection(catDirection));
+        if(Sensing.cats != null && Sensing.cats.length >= 1) {
+            Direction catDirection = rc.getLocation().directionTo(Sensing.cats[0].getLocation());
+            if(rc.canMove(catDirection.opposite())) {
+                rc.move(catDirection.opposite());
             }
 
         }

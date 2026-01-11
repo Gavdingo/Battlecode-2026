@@ -6,6 +6,7 @@ import v1.BabyRat.Collect;
 import v1.BabyRat.Controller;
 import v1.BabyRat.Explore;
 import v1.Utility.Mapping;
+import v1.Utility.Sensing;
 
 import java.util.Random;
 
@@ -41,7 +42,7 @@ public class RobotPlayer {
             try {
 
                 //run Utility functions first
-                Mapping.run(rc);
+                Sensing.run(rc);
 
                 if (rc.getType().isBabyRatType()) {
                     Controller.run(rc);
@@ -68,6 +69,7 @@ public class RobotPlayer {
         Explore.init(rc);
         //Utility
         Mapping.init(rc);
+        Sensing.init(rc);
         //RatKing
         RatKing.init(rc);
     }
@@ -81,21 +83,6 @@ public class RobotPlayer {
 
         return new MapLocation(centerX + distFromCenterX - 1, centerY + distFromCenterY - 1);
 
-
-    }
-
-    public static Direction getOppositeDirection(Direction dir) {
-        int index = -1;
-
-        for (int i = 0; i < directions.length; i++) {
-            if (directions[i] == dir) {
-                index = i;
-                break;
-            }
-        }
-
-        // move 4 steps forward and wrap around
-        return directions[(index + 4) % directions.length];
 
     }
 }
