@@ -14,7 +14,7 @@ public class RatKing extends  RobotPlayer{
 
         //run from cats
 
-        if(Sensing.cats != null && Sensing.cats.length >= 1) {
+        if (Sensing.cats != null && Sensing.cats.length >= 1) {
             Direction catDirection = rc.getLocation().directionTo(Sensing.cats[0].getLocation());
             if(rc.canMove(catDirection.opposite())) {
                 rc.move(catDirection.opposite());
@@ -26,12 +26,11 @@ public class RatKing extends  RobotPlayer{
 
         Direction enemyKing = rc.getLocation().directionTo(getOppositeSymmetry(rc, rc.getLocation()));
 
-        if(rc.getAllCheese() > 500) {
-            if(rc.canBuildRat(rc.getLocation().add(enemyKing).add(enemyKing))) {
+        if (rc.getAllCheese() > 500) {
+            if (rc.canBuildRat(rc.getLocation().add(enemyKing).add(enemyKing))) {
                 rc.buildRat(rc.getLocation().add(enemyKing).add(enemyKing));
             }
         }
-
 
     }
 }
