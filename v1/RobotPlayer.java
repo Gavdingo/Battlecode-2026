@@ -54,6 +54,12 @@ public class RobotPlayer {
 
 
 
+            } catch (GameActionException e) {
+                System.out.println("GameActionException");
+                e.printStackTrace();
+            } catch (Exception e) {
+                System.out.println("Exception");
+                e.printStackTrace();
             } finally {
                 Clock.yield();
             }
