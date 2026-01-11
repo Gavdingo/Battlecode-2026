@@ -85,19 +85,4 @@ public class RobotPlayer {
 
 
     }
-
-    public static Direction getOppositeDirection(Direction dir) {
-        int index = -1;
-
-        for (int i = 0; i < directions.length; i++) {
-            if (directions[i] == dir) {
-                index = i;
-                break;
-            }
-        }
-
-        // move 4 steps forward and wrap around
-        return directions[(index + 4) % directions.length];
-
-    }
 }

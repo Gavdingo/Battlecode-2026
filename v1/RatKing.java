@@ -16,8 +16,8 @@ public class RatKing extends  RobotPlayer{
 
         if(Sensing.cats != null && Sensing.cats.length >= 1) {
             Direction catDirection = rc.getLocation().directionTo(Sensing.cats[0].getLocation());
-            if(rc.canMove(getOppositeDirection(catDirection))) {
-                rc.move(getOppositeDirection(catDirection));
+            if(rc.canMove(catDirection.opposite())) {
+                rc.move(catDirection.opposite());
             }
 
         }

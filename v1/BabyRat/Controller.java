@@ -4,6 +4,7 @@ import battlecode.common.GameActionException;
 import battlecode.common.MapLocation;
 import battlecode.common.RobotController;
 import v1.RobotPlayer;
+import v1.Utility.Micro;
 import v1.Utility.Sensing;
 import v1.Utility.Pathfinding;
 
@@ -18,7 +19,11 @@ public class Controller extends RobotPlayer {
     }
 
     public static void run(RobotController rc) throws GameActionException {
-        simpleRush(rc);
+        if(Sensing.enemyRats.length > 0) {
+            Micro.run(rc);
+        } else {
+            simpleRush(rc);
+        }
     }
 
     public static void simpleRush(RobotController rc) throws GameActionException {
