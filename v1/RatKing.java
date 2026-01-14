@@ -7,31 +7,36 @@ import v1.Utility.Sensing;
 import java.util.Map;
 
 public class RatKing extends  RobotPlayer{
-    public static void init(RobotController rc) {}
+    private static final int minCheese = 500;
+    private static MapLocation ratSpawnLocation;
+
+    public static void init(RobotController rc) {
+        Direction enemyKingDir = rc.getLocation().directionTo(getOppositeSymmetry(rc, rc.getLocation()));
+        ratSpawnLocation = rc.getLocation().add(enemyKingDir).add(enemyKingDir);
+    }
 
     public static void run(RobotController rc) throws GameActionException {
-        //TODO: improve this code and organize them into methods
-
-        //run from cats
-
-        if(Sensing.cats != null && Sensing.cats.length >= 1) {
-            Direction catDirection = rc.getLocation().directionTo(Sensing.cats[0].getLocation());
-            if(rc.canMove(catDirection.opposite())) {
-                rc.move(catDirection.opposite());
-            }
-
+        if (Sensing.cats != null && Sensing.cats.length > 0) {
+            runFromCats(rc);
         }
 
-        //spawn rats
-
-        Direction enemyKing = rc.getLocation().directionTo(getOppositeSymmetry(rc, rc.getLocation()));
-
-        if(rc.getAllCheese() > 500) {
-            if(rc.canBuildRat(rc.getLocation().add(enemyKing).add(enemyKing))) {
-                rc.buildRat(rc.getLocation().add(enemyKing).add(enemyKing));
-            }
+        if (rc.getAllCheese() > minCheese) {
+            buildRat(rc, ratSpawnLocation);
         }
+    }
 
+    private static void runFromCats(RobotController rc)
+            throws GameActionException {
+        Direction catDirection = rc.getLocation().directionTo(Sensing.cats[0].getLocation());
+        if (rc.canMove(catDirection.opposite())) {
+            rc.move(catDirection.opposite());
+        }
+    }
 
+    private static void buildRat(RobotController rc, MapLocation targetLocation)
+            throws GameActionException {
+        if (rc.canBuildRat(targetLocation)) {
+            rc.buildRat(targetLocation);
+        }
     }
 }

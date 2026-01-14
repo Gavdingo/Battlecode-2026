@@ -42,7 +42,6 @@ public class RobotPlayer {
             turnCount++;
 
             try {
-
                 //run Utility functions first
                 Sensing.run(rc);
 
@@ -53,9 +52,12 @@ public class RobotPlayer {
                 if (rc.getType().isRatKingType()) {
                     RatKing.run(rc);
                 }
-
-
-
+            } catch (GameActionException e) {
+                System.out.println("GameActionException");
+                e.printStackTrace();
+            } catch (Exception e) {
+                System.out.println("Exception");
+                e.printStackTrace();
             } finally {
                 Clock.yield();
             }
@@ -76,15 +78,13 @@ public class RobotPlayer {
         RatKing.init(rc);
     }
 
-    public static MapLocation getOppositeSymmetry(RobotController rc, MapLocation loc) {
+    public static MapLocation getOppositeSymmetry(RobotController rc, MapLocation location) {
         int centerX = rc.getMapWidth() / 2;
         int centerY = rc.getMapHeight() / 2;
 
-        int distFromCenterX = centerX - loc.x;
-        int distFromCenterY = centerY - loc.y;
+        int distFromCenterX = centerX - location.x;
+        int distFromCenterY = centerY - location.y;
 
         return new MapLocation(centerX + distFromCenterX - 1, centerY + distFromCenterY - 1);
-
-
     }
 }

@@ -19,7 +19,7 @@ public class Controller extends RobotPlayer {
     }
 
     public static void run(RobotController rc) throws GameActionException {
-        if(Sensing.enemyRats.length > 0) {
+        if (Sensing.enemyRats.length > 0) {
             Micro.run(rc);
         } else {
             simpleRush(rc);
@@ -27,14 +27,13 @@ public class Controller extends RobotPlayer {
     }
 
     public static void simpleRush(RobotController rc) throws GameActionException {
-
-        if(Sensing.enemyRatKings != null && Sensing.enemyRatKings.length >= 1) {
+        if (Sensing.enemyRatKings != null && Sensing.enemyRatKings.length >= 1) {
             //rc.setIndicatorString("Rat King");
             target = Sensing.enemyRatKings[0];
             if(rc.canAttack(rc.getLocation().add(rc.getLocation().directionTo(target)))) {
                 rc.attack(rc.getLocation().add(rc.getLocation().directionTo(target)));
             }
-        } else if(rc.getLocation().equals(target)) {
+        } else if (rc.getLocation().equals(target)) {
             target = new MapLocation(rand.nextInt(rc.getMapWidth()), rand.nextInt(rc.getMapHeight()));
         }
         //rc.setIndicatorLine(rc.getLocation(),target,255,255,255);

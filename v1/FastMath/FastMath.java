@@ -27,7 +27,7 @@ public class FastMath {
         return lookupRand256.charAt(randIndex);
     }
 
-    public static float fakefloat() {
+    public static float fakeFloat() {
         float rv = (float) (rand256() / 256.0);
         return rv;
     }

@@ -16,19 +16,19 @@ public class FastIntSet {
 
     public void add(int i) {
         String key = String.valueOf((char) i);
-        if (keys.indexOf(key) < 0) {
-            keys.append(key);
-            size++;
-        }
+        if (keys.indexOf(key) >= 0) return;
+
+        keys.append(key);
+        size++;
     }
 
     public void remove(int i) {
         String key = String.valueOf((char) i);
         int index;
-        if ((index = keys.indexOf(key)) >= 0) {
-            keys.deleteCharAt(index);
-            size--;
-        }
+        if ((index = keys.indexOf(key)) < 0) return;
+
+        keys.deleteCharAt(index);
+        size--;
     }
 
     public boolean contains(int i) {

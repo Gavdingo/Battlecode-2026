@@ -183,11 +183,9 @@ public class LambdaUtil {
             return true;
         }
         for (int i = array.length; --i >= 0; ) {
-            if (predicate.test(array[i])) {
-                if (--count <= 0) {
-                    return true;
-                }
-            }
+            if (!predicate.test(array[i])) continue;
+            if (--count > 0) continue;
+            return true;
         }
         return false;
     }
